@@ -10,6 +10,12 @@ public class MenuState : BaseState
     public override void EnterState()
     {
         Debug.Log("MenuState entered");
+
+        EventManager.EnterGameplay += EventManager_EnterGameplay;
+    }
+    private void EventManager_EnterGameplay()
+    {
+        GoToGame();
     }
     public override void UpdateState()
     {
@@ -18,5 +24,10 @@ public class MenuState : BaseState
     public override void ExitState()
     {
         Debug.Log("MenuState left");
+        EventManager.EnterGameplay -= EventManager_EnterGameplay;
+    }
+    private void GoToGame()
+    {
+        myStateMachine.EnterState(new GameState(myStateMachine));
     }
 }

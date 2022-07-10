@@ -10,7 +10,7 @@ namespace FrogNinja.States
         {
             EnterState(new MenuState(this));
         }
-        private void EnterState(BaseState newState)
+        public void EnterState(BaseState newState)
         {
             if (currentState != null)
                 currentState.ExitState();
