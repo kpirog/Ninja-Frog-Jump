@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckIsGrounded();
-        //DrawRaycastLines();
+        DrawRaycastLines();
         
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
