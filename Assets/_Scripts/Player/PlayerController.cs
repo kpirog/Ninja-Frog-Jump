@@ -29,19 +29,9 @@ public class PlayerController : MonoBehaviour
     {
         CheckIsGrounded();
         DrawRaycastLines();
-        
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            direction = Vector2.left;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            direction = Vector2.right;
-        }
-        else
-        {
-            direction = Vector2.zero;
-        }
+        SetDirection();
+
+        EventManager.OnUpdatePlayerPosition(transform.position);
     }
     private void FixedUpdate()
     {
@@ -52,10 +42,13 @@ public class PlayerController : MonoBehaviour
     }
     private void OnBecameInvisible()
     {
-        Vector3 positionInCameraView = mainCamera.WorldToViewportPoint(transform.position); 
+        if (mainCamera == null) { return; }
+
+        Vector3 positionInCameraView = mainCamera.WorldToViewportPoint(transform.position);
 
         if (positionInCameraView.y < 0f)
         {
+            EventManager.OnPlayerFallenOff();
             SceneManager.LoadScene(0);
         }
         else
@@ -77,5 +70,20 @@ public class PlayerController : MonoBehaviour
     {
         Debug.DrawRay(transform.position + leftRayPosition, transform.up * groundCheckDistance, Color.red);
         Debug.DrawRay(transform.position + rightRayPosition, transform.up * groundCheckDistance, Color.red);
+    }
+    private void SetDirection()
+    {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            direction = Vector2.left;
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            direction = Vector2.right;
+        }
+        else
+        {
+            direction = Vector2.zero;
+        }
     }
 }
