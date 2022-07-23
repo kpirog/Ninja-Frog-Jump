@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -17,10 +18,12 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded { get; private set; }
 
     private Rigidbody2D rb;
+    private Camera mainCamera;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main;
     }
     private void Update()
     {
@@ -49,7 +52,16 @@ public class PlayerController : MonoBehaviour
     }
     private void OnBecameInvisible()
     {
-        SetOppositePosition();
+        Vector3 positionInCameraView = mainCamera.WorldToViewportPoint(transform.position); 
+
+        if (positionInCameraView.y < 0f)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SetOppositePosition();
+        }
     }
     private void SetOppositePosition()
     {
@@ -63,7 +75,6 @@ public class PlayerController : MonoBehaviour
     }
     private void DrawRaycastLines()
     {
-        Debug.Log(CheckIsGrounded());
         Debug.DrawRay(transform.position + leftRayPosition, transform.up * groundCheckDistance, Color.red);
         Debug.DrawRay(transform.position + rightRayPosition, transform.up * groundCheckDistance, Color.red);
     }
