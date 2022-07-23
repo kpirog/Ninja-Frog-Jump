@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public abstract class BaseWindow : MonoBehaviour
+namespace FrogNinja.UI
 {
-    public virtual void ShowWindow()
+    public abstract class BaseWindow : MonoBehaviour
     {
-        gameObject.SetActive(true);
-    }
-    public virtual void HideWindow()
-    {
-        gameObject.SetActive(false);
+        public virtual void ShowWindow()
+        {
+            gameObject.SetActive(true);
+        }
+        public virtual void HideWindow()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

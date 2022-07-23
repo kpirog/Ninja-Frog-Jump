@@ -1,3 +1,4 @@
+using FrogNinja.UI;
 using UnityEngine;
 
 namespace FrogNinja.States
@@ -12,6 +13,7 @@ namespace FrogNinja.States
         public override void EnterState()
         {
             Debug.Log("GameState entered");
+            UIManager.Instance.ShowHUD();
         }
 
         public override void ExitState()

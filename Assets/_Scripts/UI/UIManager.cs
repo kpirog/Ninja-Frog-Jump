@@ -1,33 +1,44 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+namespace FrogNinja.UI
 {
-    public static UIManager Instance;
-
-    [SerializeField] private MainMenuWindow mainMenu;
-
-    private BaseWindow currentlyOpenWindow;
-
-    private void Awake()
+    public class UIManager : MonoBehaviour
     {
-        if (Instance != null)
+        public static UIManager Instance;
+
+        [SerializeField] private MainMenuWindow mainMenu;
+        [SerializeField] private HUDWindow hud;
+
+        private BaseWindow currentlyOpenWindow;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
         }
-
-        Instance = this;
-    }
-
-    public void ShowMainMenu()
-    {
-        if (currentlyOpenWindow != null)
+        public void ShowMainMenu()
         {
-            currentlyOpenWindow.HideWindow();
+            HideAndSwitchWindow(mainMenu);
         }
+        public void ShowHUD()
+        {
+            HideAndSwitchWindow(hud);
+        }
+        public void HideAndSwitchWindow(BaseWindow windowToSwitch)
+        {
+            if (currentlyOpenWindow != null)
+            {
+                currentlyOpenWindow.HideWindow();
+            }
 
-        currentlyOpenWindow = mainMenu;
+            currentlyOpenWindow = windowToSwitch;
 
-        currentlyOpenWindow.ShowWindow();
+            currentlyOpenWindow.ShowWindow();
+        }
     }
 }

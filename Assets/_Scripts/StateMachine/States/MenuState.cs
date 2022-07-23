@@ -1,4 +1,5 @@
 using FrogNinja.States;
+using FrogNinja.UI;
 using UnityEngine;
 
 public class MenuState : BaseState

@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class MainMenuWindow : BaseWindow
+namespace FrogNinja.UI
 {
-    public void Button_PlayGame()
+    public class MainMenuWindow : BaseWindow
     {
-        EventManager.EnterGameplayButton();
-    }
-    public void Button_OpenSettings()
-    {
+        public void Button_PlayGame()
+        {
+            EventManager.EnterGameplayButton();
+        }
+        public void Button_OpenSettings()
+        {
 
-    }
-    public void Button_ExitGame()
-    {
-        Application.Quit();
+        }
+        public void Button_ExitGame()
+        {
+            Application.Quit();
+        }
     }
 }
