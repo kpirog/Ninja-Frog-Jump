@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuWindow : BaseWindow
 {
     public void Button_PlayGame()
     {
-
+        EventManager.EnterGameplayButton();
     }
     public void Button_OpenSettings()
     {
@@ -14,6 +12,6 @@ public class MainMenuWindow : BaseWindow
     }
     public void Button_ExitGame()
     {
-
+        Application.Quit();
     }
 }

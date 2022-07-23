@@ -12,6 +12,7 @@ public class MenuState : BaseState
         Debug.Log("MenuState entered");
 
         EventManager.EnterGameplay += EventManager_EnterGameplay;
+        UIManager.Instance.ShowMainMenu();
     }
     private void EventManager_EnterGameplay()
     {
@@ -19,11 +20,10 @@ public class MenuState : BaseState
     }
     public override void UpdateState()
     {
-        Debug.Log("MenuState update");
+        
     }
     public override void ExitState()
     {
-        Debug.Log("MenuState left");
         EventManager.EnterGameplay -= EventManager_EnterGameplay;
     }
     private void GoToGame()

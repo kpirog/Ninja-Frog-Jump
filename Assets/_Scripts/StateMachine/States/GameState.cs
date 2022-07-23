@@ -16,12 +16,12 @@ namespace FrogNinja.States
 
         public override void ExitState()
         {
-            Debug.Log("GameState left");
+            
         }
 
         public override void UpdateState()
         {
-            Debug.Log("GameState update");
+            
         }
 
         private void GoToMenu()
