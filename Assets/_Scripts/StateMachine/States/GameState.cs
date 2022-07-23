@@ -14,11 +14,12 @@ namespace FrogNinja.States
         {
             Debug.Log("GameState entered");
             UIManager.Instance.ShowHUD();
+            EventManager.PlayerFallenOff += GoToLose;
         }
 
         public override void ExitState()
         {
-            
+            EventManager.PlayerFallenOff -= GoToLose;
         }
 
         public override void UpdateState()

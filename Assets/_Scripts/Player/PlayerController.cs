@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
         if (positionInCameraView.y < 0f)
         {
             EventManager.OnPlayerFallenOff();
-            SceneManager.LoadScene(0);
         }
         else
         {

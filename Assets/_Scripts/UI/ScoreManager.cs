@@ -10,6 +10,9 @@ public class ScoreManager : MonoBehaviour
     private float maxPositionY;
     private bool firstUpdate = false;
 
+    public int CurrentScore => currentScore;
+    public int HighScore => highScore;
+
     private void Awake()
     {
         highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);

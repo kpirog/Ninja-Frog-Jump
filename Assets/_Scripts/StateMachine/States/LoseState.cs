@@ -1,3 +1,5 @@
+using FrogNinja.UI;
+
 namespace FrogNinja.States
 {
     public class LoseState : BaseState
@@ -6,15 +8,15 @@ namespace FrogNinja.States
         {
             Initialize(stateMachine);
         }
-        
+
         public override void EnterState()
         {
-
+            UIManager.Instance.ShowLoseWindow();
         }
 
         public override void ExitState()
         {
-
+            
         }
 
         public override void UpdateState()

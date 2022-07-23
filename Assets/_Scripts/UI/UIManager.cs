@@ -8,6 +8,7 @@ namespace FrogNinja.UI
 
         [SerializeField] private MainMenuWindow mainMenu;
         [SerializeField] private HUDWindow hud;
+        [SerializeField] private LoseWindow loseWindow;
 
         private BaseWindow currentlyOpenWindow;
 
@@ -28,6 +29,10 @@ namespace FrogNinja.UI
         public void ShowHUD()
         {
             HideAndSwitchWindow(hud);
+        }
+        public void ShowLoseWindow()
+        {
+            HideAndSwitchWindow(loseWindow);
         }
         public void HideAndSwitchWindow(BaseWindow windowToSwitch)
         {
