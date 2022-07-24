@@ -6,13 +6,12 @@ public class HoveringEnemy : BaseEnemy
 
     private Vector2 movementRange;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();   
+        
         movementRange = new Vector2(transform.position.x - movementRangeX,
             transform.position.x + movementRangeX);
-
-        velocity = new Vector2(speed, 0f);
-        spriteRenderer.flipX = true;
     }
     protected override void Move()
     {

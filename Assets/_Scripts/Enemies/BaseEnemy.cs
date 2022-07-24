@@ -8,7 +8,12 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected Vector2 velocity;
 
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    
+
+    protected virtual void Awake()
+    {
+        velocity = new Vector2(speed, 0f);
+        spriteRenderer.flipX = true;
+    }
     protected virtual void FixedUpdate()
     {
         Move();
