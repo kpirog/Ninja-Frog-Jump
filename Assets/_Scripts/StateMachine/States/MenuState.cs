@@ -11,6 +11,7 @@ public class MenuState : BaseState
     public override void EnterState()
     {
         Debug.Log("MenuState entered");
+        myStateMachine.player.gameObject.SetActive(false);
 
         EventManager.EnterGameplay += EventManager_EnterGameplay;
         UIManager.Instance.ShowMainMenu();

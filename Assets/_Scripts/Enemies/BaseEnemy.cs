@@ -25,5 +25,11 @@ public abstract class BaseEnemy : MonoBehaviour
         {
             EventManager.OnEnemyHitPlayer();
         }
+        else
+        {
+            Debug.Log("Enemy died");
+            rb.gameObject.SetActive(false);
+            EventManager.OnEnemyDied();
+        }
     }
 }
