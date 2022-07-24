@@ -13,7 +13,6 @@ namespace FrogNinja.States
         public override void EnterState()
         {
             myStateMachine.player.gameObject.SetActive(true);
-            Debug.Log("GameState entered");
             EventManager.EnemyHitPlayer += EventManager_EnemyHitPlayer;
             UIManager.Instance.ShowHUD();
             EventManager.PlayerDied += GoToLose;

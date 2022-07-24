@@ -12,15 +12,18 @@ namespace FrogNinja.States
 
         public override void EnterState()
         {
-            EventManager.RestartGame += GoToGame;
             UIManager.Instance.ShowLoseWindow();
+            EventManager.EnterGameplay += EventManager_EnterGameplay;
+        }
+
+        private void EventManager_EnterGameplay()
+        {
+            GoToGame();
         }
 
         public override void ExitState()
         {
-            LevelGenerator.Instance.RestartLevel();
-            myStateMachine.player.transform.position = LevelGenerator.Instance.SpawnPosition;
-            myStateMachine.mainCamera.transform.position = new Vector3(0f, 0f, -10f);
+            
         }
 
         public override void UpdateState()
@@ -33,6 +36,8 @@ namespace FrogNinja.States
         }
         private void GoToGame()
         {
+            myStateMachine.player.transform.position = LevelGenerator.Instance.SpawnPosition;
+            myStateMachine.mainCamera.transform.position = new Vector3(0f, 0f, -10f);
             myStateMachine.EnterState(new GameState(myStateMachine));
         }
     }

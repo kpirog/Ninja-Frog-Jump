@@ -39,6 +39,7 @@ public static class EventManager
     }
     public static void OnRestartGame()
     {
+        //Debug.Log("Restart");
         RestartGame?.Invoke();
     }
 }

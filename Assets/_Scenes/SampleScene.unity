@@ -878,7 +878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322692876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.63, z: 0}
+  m_LocalPosition: {x: 0, y: -4.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   platformConfigurations:
   - {fileID: 11400000, guid: d2adf26239c3a5a428b2da513bc6da27, type: 2}
   - {fileID: 11400000, guid: 14f9e47158fa5724f8412eea9d35800c, type: 2}
-  enemies:
+  enemiesPrefabs:
   - {fileID: 7593860492282291945, guid: e37a2fd9e71818a42a0b7e1944e2bf9b, type: 3}
   - {fileID: 4493107039487291950, guid: 794725cb49d83124c8c44a6ba58200c3, type: 3}
   playerSpawnPosition: {fileID: 322692877}

@@ -6,13 +6,14 @@ using System.Linq;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private List<PlatformConfigurationScript> platformConfigurations;
-    [SerializeField] private List<BaseEnemy> enemies = new List<BaseEnemy>();
+    [SerializeField] private List<BaseEnemy> enemiesPrefabs;
     [SerializeField] private Transform playerSpawnPosition;
 
     [SerializeField] private float minYOffsetRange;
     [SerializeField] private float maxYOffsetRange;
     [SerializeField] private float minDistanceToSpawnEnemy = 0.5f;
 
+    private List<BaseEnemy> spawnedEnemies = new List<BaseEnemy>();
     private List<BasePlatform> spawnedPlatforms = new List<BasePlatform>();
     private float lastSpawnedY;
     private Camera mainCamera;
@@ -59,7 +60,6 @@ public class LevelGenerator : MonoBehaviour
         EventManager.PlayerPositionUpdate -= EventManager_PlayerPositionUpdate;
         EventManager.PlayerDied -= EventManager_PlayerFallenOff;
     }
-
     private void EventManager_PlayerPositionUpdate(Vector3 obj)
     {
         if (obj.y > lastSpawnedY / 2f)
@@ -77,16 +77,17 @@ public class LevelGenerator : MonoBehaviour
         {
             Vector3 spawnPosition = new Vector3(GetRandomXPosition(), lastY + (difference / 2f), 0f);
 
-            BaseEnemy enemyToSpawn = enemies[Random.Range(0, enemies.Count)];
+            BaseEnemy enemyToSpawn = enemiesPrefabs[Random.Range(0, enemiesPrefabs.Count)];
 
             BaseEnemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform);
 
-            enemies.Add(spawnedEnemy);
+            spawnedEnemies.Add(spawnedEnemy);
         }
     }
     private void CreateStartLevel()
     {
         lastSpawnedY = playerSpawnPosition.position.y;
+        DestroyPreviousLevel();
 
         for (int i = 0; i < 20; i++)
         {
@@ -127,7 +128,7 @@ public class LevelGenerator : MonoBehaviour
 
         return resultPosition.x;
     }
-    public void RestartLevel()
+    public void DestroyPreviousLevel()
     {
         if (spawnedPlatforms.Count > 0)
         {
@@ -138,16 +139,14 @@ public class LevelGenerator : MonoBehaviour
 
             spawnedPlatforms.Clear();
         }
-        if (enemies.Count > 0)
+        if (spawnedEnemies.Count > 0)
         {
-            foreach (var enemy in enemies)
+            foreach (var enemy in spawnedEnemies)
             {
                 Destroy(enemy.gameObject);
             }
 
-            enemies.Clear();
+            spawnedEnemies.Clear();
         }
-
-        CreateStartLevel();
     }
 }
