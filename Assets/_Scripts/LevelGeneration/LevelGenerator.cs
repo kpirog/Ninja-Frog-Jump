@@ -6,17 +6,20 @@ using System.Linq;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private List<PlatformConfigurationScript> platformConfigurations;
-
+    [SerializeField] private List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] private Transform playerSpawnPosition;
 
     [SerializeField] private float minYOffsetRange;
     [SerializeField] private float maxYOffsetRange;
+    [SerializeField] private float minDistanceToSpawnEnemy = 0.5f;
 
     private List<BasePlatform> spawnedPlatforms = new List<BasePlatform>();
     private float lastSpawnedY;
     private Camera mainCamera;
     private BasePlatform lastSpawnedPlatform;
     private PlatformConfigurationScript lastConfiguration;
+
+    private bool canSpawn;
 
     public Vector3 SpawnPosition => playerSpawnPosition.position;
 
@@ -34,8 +37,6 @@ public class LevelGenerator : MonoBehaviour
 
         mainCamera = Camera.main;
 
-        CreateStartLevel();
-
         EventManager.EnterGameplay += EventManager_EnterGameplay;
     }
     private void OnDestroy()
@@ -46,6 +47,9 @@ public class LevelGenerator : MonoBehaviour
     }
     private void EventManager_EnterGameplay()
     {
+        canSpawn = false;
+        CreateStartLevel();
+        canSpawn = true;
         EventManager.PlayerPositionUpdate += EventManager_PlayerPositionUpdate;
         EventManager.PlayerDied += EventManager_PlayerFallenOff;
     }
@@ -63,12 +67,28 @@ public class LevelGenerator : MonoBehaviour
             SpawnPlatform();
         }
     }
+    private void SpawnEnemyIfAvailable(float lastY, float currentY)
+    {
+        if (!canSpawn) { return; }
 
+        float difference = currentY - lastY;
+
+        if (difference > minDistanceToSpawnEnemy)
+        {
+            Vector3 spawnPosition = new Vector3(GetRandomXPosition(), lastY + (difference / 2f), 0f);
+
+            BaseEnemy enemyToSpawn = enemies[Random.Range(0, enemies.Count)];
+
+            BaseEnemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform);
+
+            enemies.Add(spawnedEnemy);
+        }
+    }
     private void CreateStartLevel()
     {
         lastSpawnedY = playerSpawnPosition.position.y;
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             SpawnPlatform();
         }
@@ -93,6 +113,7 @@ public class LevelGenerator : MonoBehaviour
 
         BasePlatform newPlatform = Instantiate(platformToSpawn, spawnPosition, Quaternion.identity, transform);
         spawnedPlatforms.Add(newPlatform);
+        SpawnEnemyIfAvailable(lastSpawnedY, spawnPosition.y);
 
         lastSpawnedY = spawnPosition.y;
         lastSpawnedPlatform = newPlatform;
@@ -112,10 +133,19 @@ public class LevelGenerator : MonoBehaviour
         {
             foreach (var platform in spawnedPlatforms)
             {
-                Destroy(platform);
+                Destroy(platform.gameObject);
             }
 
             spawnedPlatforms.Clear();
+        }
+        if (enemies.Count > 0)
+        {
+            foreach (var enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+
+            enemies.Clear();
         }
 
         CreateStartLevel();
