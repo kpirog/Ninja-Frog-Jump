@@ -29,6 +29,8 @@ public class MenuState : BaseState
     }
     private void GoToGame()
     {
+        myStateMachine.player.transform.position = LevelGenerator.Instance.SpawnPosition;
+        myStateMachine.mainCamera.transform.position = new Vector3(0f, 0f, -10f);
         myStateMachine.EnterState(new GameState(myStateMachine));
     }
 }

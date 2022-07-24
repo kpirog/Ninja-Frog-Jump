@@ -6,8 +6,14 @@ namespace FrogNinja.States
     {
         private BaseState currentState;
 
+        [HideInInspector] public PlayerController player;
+
+        [HideInInspector] public Camera mainCamera;
+
         private void Start()
         {
+            player = FindObjectOfType<PlayerController>();
+            mainCamera = Camera.main;
             EnterState(new MenuState(this));
         }
         public void EnterState(BaseState newState)

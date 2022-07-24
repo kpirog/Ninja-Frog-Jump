@@ -11,6 +11,7 @@ namespace FrogNinja.UI
         [SerializeField] private ScoreManager scoreManager;
         public override void ShowWindow()
         {
+            EventManager.RestartGame += Button_RestartGame;
             scoreText.text = $"Your score: {scoreManager.CurrentScore}";
             highScoreText.text = $"High score: {scoreManager.HighScore}";
             base.ShowWindow();
@@ -21,7 +22,7 @@ namespace FrogNinja.UI
         }
         public void Button_RestartGame()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            HideWindow();
         }
         public void Button_MainMenu()
         {

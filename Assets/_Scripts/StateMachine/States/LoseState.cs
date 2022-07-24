@@ -1,4 +1,5 @@
 using FrogNinja.UI;
+using UnityEngine;
 
 namespace FrogNinja.States
 {
@@ -11,12 +12,15 @@ namespace FrogNinja.States
 
         public override void EnterState()
         {
+            EventManager.RestartGame += GoToGame;
             UIManager.Instance.ShowLoseWindow();
         }
 
         public override void ExitState()
         {
-            
+            LevelGenerator.Instance.RestartLevel();
+            myStateMachine.player.transform.position = LevelGenerator.Instance.SpawnPosition;
+            myStateMachine.mainCamera.transform.position = new Vector3(0f, 0f, -10f);
         }
 
         public override void UpdateState()

@@ -1,12 +1,25 @@
 using UnityEngine;
 using System;
 
-public static class EventManager 
+public static class EventManager
 {
     public static event Action EnterGameplay;
     public static event Action<Vector3> PlayerPositionUpdate;
     public static event Action<int> CurrentScoreUpdated;
-    public static event Action PlayerFallenOff;
+    public static event Action PlayerDied;
+    public static event Action RestartGame;
+
+    public static event Action EnemyHitPlayer;
+    public static event Action EnemyDied;
+
+    public static void OnEnemyHitPlayer()
+    {
+        EnemyHitPlayer?.Invoke();
+    }
+    public static void OnEnemyDied()
+    {
+        EnemyDied?.Invoke();
+    }
 
     public static void EnterGameplayButton()
     {
@@ -20,8 +33,12 @@ public static class EventManager
     {
         PlayerPositionUpdate?.Invoke(position);
     }
-    public static void OnPlayerFallenOff()
+    public static void OnPlayerDied()
     {
-        PlayerFallenOff?.Invoke();
+        PlayerDied?.Invoke();
+    }
+    public static void OnRestartGame()
+    {
+        RestartGame?.Invoke();
     }
 }

@@ -24,9 +24,18 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        EventManager.EnterGameplay += EventManager_EnterGameplay;
     }
+
+    private void EventManager_EnterGameplay()
+    {
+        if (!gameObject.activeInHierarchy) { gameObject.SetActive(true); }
+    }
+
     private void Update()
     {
+        if (!gameObject.activeInHierarchy) { return; }
+
         CheckIsGrounded();
         DrawRaycastLines();
         SetDirection();
@@ -48,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
         if (positionInCameraView.y < 0f)
         {
-            EventManager.OnPlayerFallenOff();
+            EventManager.OnPlayerDied();
+            gameObject.SetActive(false);
         }
         else
         {

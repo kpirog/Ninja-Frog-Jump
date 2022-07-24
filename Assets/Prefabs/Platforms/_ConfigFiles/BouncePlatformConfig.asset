@@ -15,4 +15,4 @@ MonoBehaviour:
   platforms:
   - {fileID: 1955567708590171180, guid: d93b939a2c24c4f4cb0e24102094e078, type: 3}
   - {fileID: 8393735252313182336, guid: 702366a771a03094c957c4ca8e412662, type: 3}
-  defaultYIncrease: 2
+  defaultYIncrease: 1

@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
 
         EventManager.EnterGameplay += EventManager_EnterGameplay;
         EventManager.PlayerPositionUpdate += EventManager_PlayerPositionUpdate;
-        EventManager.PlayerFallenOff += EventManager_PlayerFallenOff;
+        EventManager.PlayerDied += EventManager_PlayerFallenOff;
     }
 
     private void EventManager_EnterGameplay()
@@ -39,7 +39,7 @@ public class ScoreManager : MonoBehaviour
     {
         EventManager.EnterGameplay -= EventManager_EnterGameplay;
         EventManager.PlayerPositionUpdate -= EventManager_PlayerPositionUpdate;
-        EventManager.PlayerFallenOff -= EventManager_PlayerFallenOff;
+        EventManager.PlayerDied -= EventManager_PlayerFallenOff;
     }
     private void EventManager_PlayerPositionUpdate(Vector3 obj)
     {

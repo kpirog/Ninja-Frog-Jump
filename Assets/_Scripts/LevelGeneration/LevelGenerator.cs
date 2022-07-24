@@ -12,13 +12,26 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float minYOffsetRange;
     [SerializeField] private float maxYOffsetRange;
 
+    private List<BasePlatform> spawnedPlatforms = new List<BasePlatform>();
     private float lastSpawnedY;
     private Camera mainCamera;
     private BasePlatform lastSpawnedPlatform;
     private PlatformConfigurationScript lastConfiguration;
 
+    public Vector3 SpawnPosition => playerSpawnPosition.position;
+
+    public static LevelGenerator Instance;
+
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         mainCamera = Camera.main;
 
         CreateStartLevel();
@@ -29,18 +42,18 @@ public class LevelGenerator : MonoBehaviour
     {
         EventManager.EnterGameplay -= EventManager_EnterGameplay;
         EventManager.PlayerPositionUpdate -= EventManager_PlayerPositionUpdate;
-        EventManager.PlayerFallenOff -= EventManager_PlayerFallenOff;
+        EventManager.PlayerDied -= EventManager_PlayerFallenOff;
     }
     private void EventManager_EnterGameplay()
     {
         EventManager.PlayerPositionUpdate += EventManager_PlayerPositionUpdate;
-        EventManager.PlayerFallenOff += EventManager_PlayerFallenOff;
+        EventManager.PlayerDied += EventManager_PlayerFallenOff;
     }
 
     private void EventManager_PlayerFallenOff()
     {
         EventManager.PlayerPositionUpdate -= EventManager_PlayerPositionUpdate;
-        EventManager.PlayerFallenOff -= EventManager_PlayerFallenOff;
+        EventManager.PlayerDied -= EventManager_PlayerFallenOff;
     }
 
     private void EventManager_PlayerPositionUpdate(Vector3 obj)
@@ -79,6 +92,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         BasePlatform newPlatform = Instantiate(platformToSpawn, spawnPosition, Quaternion.identity, transform);
+        spawnedPlatforms.Add(newPlatform);
 
         lastSpawnedY = spawnPosition.y;
         lastSpawnedPlatform = newPlatform;
@@ -91,5 +105,19 @@ public class LevelGenerator : MonoBehaviour
         Vector3 resultPosition = mainCamera.ViewportToWorldPoint(new Vector3(randomValue, 0f, 0f));
 
         return resultPosition.x;
+    }
+    public void RestartLevel()
+    {
+        if (spawnedPlatforms.Count > 0)
+        {
+            foreach (var platform in spawnedPlatforms)
+            {
+                Destroy(platform);
+            }
+
+            spawnedPlatforms.Clear();
+        }
+
+        CreateStartLevel();
     }
 }
